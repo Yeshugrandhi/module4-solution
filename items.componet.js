@@ -1,13 +1,24 @@
+
 (function() {
     angular.module('MenuApp')
-        .component('categories', {
-            templateUrl: 'categories.template.html',
-            controller: CategoriesController
+        .component('items', {
+            templateUrl: 'items.template.html',
+            controller: ItemsController,
+            bindings: {
+                categoryShortName: '<'
+            }
         });
 
-    CategoriesController.$inject = ['MenuDataService'];
-    function CategoriesController(MenuDataService) {
+    ItemsController.$inject = ['MenuDataService'];
+    function ItemsController(MenuDataService) {
         var $ctrl = this;
-        // Implement controller logic here
+        $ctrl.items = [];
+
+        $ctrl.$onInit = function() {
+            MenuDataService.getItemsForCategory($ctrl.categoryShortName)
+                .then(function(items) {
+                    $ctrl.items = items;
+                });
+        };
     }
 })();

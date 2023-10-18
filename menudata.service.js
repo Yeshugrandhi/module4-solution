@@ -4,6 +4,13 @@
 
     MenuDataService.$inject = ['$http'];
     function MenuDataService($http) {
-        // Implement the service as per the assignment instructions
+        // Existing code...
+
+        this.getItemsForCategory = function(categoryShortName) {
+            return $http.get(`https://coursera-jhu-default-rtdb.firebaseio.com/menu_items/${categoryShortName}.json`)
+                .then(function(response) {
+                    return response.data;
+                });
+        };
     }
 })();
